@@ -20,6 +20,8 @@ namespace KID
         private CharacterController controller;
         private Vector3 direction;
         private Transform traCamera;
+        private string parRun = "浮點數跑步";
+        private string parJump = "觸發跳躍";
         #endregion
 
         #region 事件
@@ -36,6 +38,7 @@ namespace KID
         private void Update()
         {
             Move();
+            Jump();
         }
         #endregion
 
@@ -55,14 +58,39 @@ namespace KID
 
             // 玩家角度 = 四元數.插值(玩家角度，攝影機角度，速度 * 每幀時間)
             transform.rotation = Quaternion.Lerp(transform.rotation, traCamera.rotation, turn * Time.deltaTime);
+
+            // 歐拉角 euler Angles 0 - 45 - 90 - 180 - 360
+            // 固定 X 與 Z 角度 為零
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
             #endregion
 
             direction.z = v;                            // 物件前後軸為 Z 軸：指定為 v 前後按鍵
             direction.x = h;                            // 物件左右軸為 X 軸：指定為 h 左右按鍵
 
+            direction = transform.TransformDirection(direction);    // 將角色的區域座標轉為世界座標
+
             // 角色控制器.移動(方向 * 速度)
             // Time.deltaTime 每幀的時間
             controller.Move(direction * speed * Time.deltaTime);
+
+            // 動畫更新
+            float vAxis = Input.GetAxis("Vertical");
+            float hAxis = Input.GetAxis("Horizontal");
+
+            if (Mathf.Abs(vAxis) > 0.1f)
+            {
+                ani.SetFloat(parRun, Mathf.Abs(vAxis));
+            }
+            else if (Mathf.Abs(hAxis) > 0.1f)
+            {
+                ani.SetFloat(parRun, Mathf.Abs(hAxis));
+            }
+            else
+            {
+                ani.SetFloat(parRun, 0);
+            }
+
+            transform.Rotate(0, Input.GetAxis("Mouse X"), 0);
         }
 
         /// <summary>
@@ -70,9 +98,16 @@ namespace KID
         /// </summary>
         private void Jump()
         {
+            // 如果 在地面上 並且 按下空白鍵 就跳躍
+            if (controller.isGrounded && Input.GetKeyDown(KeyCode.Space))
+            {
+                direction.y = jump;
+                ani.SetTrigger(parJump);
+            }
 
+            // 地心引力 -9.81
+            direction.y += Physics.gravity.y * 0.8f * Time.deltaTime;
         }
         #endregion
     }
 }
-
