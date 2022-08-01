@@ -15,8 +15,8 @@ MonoBehaviour:
   nameNPC: "\u5C0F\u7F8E"
   dataDialogue:
   - content: "\u7B2C\u4E00\u6BB5\u5C0D\u8A71\u5594\u5594\u5594"
-    sound: {fileID: 8300000, guid: 0fcccacff396a4e2b86aaab9fc07aaec, type: 3}
-  - content: "\u7B2C\u4E8C\u6BB5\u5C0D\u8A71\u5566\u5566\u5566"
     sound: {fileID: 8300000, guid: 475a2e1806b044850aab0e79f61c3abf, type: 3}
+  - content: "\u7B2C\u4E8C\u6BB5\u5C0D\u8A71\u5566\u5566\u5566"
+    sound: {fileID: 8300000, guid: 0dac35a0466ff4cb9a3d2c006dc956af, type: 3}
   - content: "\u7B2C\u4E09\u6BB5\u5C0D\u8A71\u310E\u310E\u310E"
     sound: {fileID: 8300000, guid: dabb91186bc1f4ff3ae7107a41e50bb7, type: 3}

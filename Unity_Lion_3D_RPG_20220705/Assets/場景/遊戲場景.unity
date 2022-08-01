@@ -274,7 +274,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7763714, y: 1}
+    m_SensorSize: {x: 1.7794677, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -290,7 +290,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105271369}
-  m_LocalRotation: {x: 0.1220426, y: 0.047609538, z: -0.005861002, w: 0.991365}
+  m_LocalRotation: {x: 0.122042604, y: 0.04760956, z: -0.0058610053, w: 0.991365}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -730,7 +730,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7763714, y: 1}
+    m_SensorSize: {x: 1.7794677, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -883,9 +883,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2cc9e4a773c07a4a9d5c94615979566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groupDialogue: {fileID: 0}
-  textName: {fileID: 0}
-  textContent: {fileID: 0}
+  groupDialogue: {fileID: 847770699}
+  textName: {fileID: 2058531326}
+  textContent: {fileID: 1672576908}
+  goTriangle: {fileID: 1659878397}
+  dataNpc: {fileID: 11400000, guid: de4a47a7fe1cf634793169ac7929bd8e, type: 2}
 --- !u!82 &847770701
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1263,7 +1265,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7763714, y: 1}
+    m_SensorSize: {x: 1.7794677, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1692,7 +1694,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7763714, y: 1}
+    m_SensorSize: {x: 1.7794677, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
