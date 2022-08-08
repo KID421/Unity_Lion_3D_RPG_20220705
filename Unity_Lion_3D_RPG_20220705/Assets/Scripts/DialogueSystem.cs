@@ -4,6 +4,9 @@ using System.Collections;   // 引用 系統 集合 - 資料結構與協同程序
 
 namespace KID
 {
+    // 委派簽名 無傳回與無參數
+    public delegate void DelegateFinishDialogue();
+
     /// <summary>
     /// 對話系統，淡入對話框，更新 NPC 資料名稱、內容、音效，淡出
     /// </summary>
@@ -11,6 +14,8 @@ namespace KID
     [RequireComponent(typeof(AudioSource))]
     public class DialogueSystem : MonoBehaviour
     {
+        #region 封裝內容
+
         #region 資料
         [SerializeField, Header("畫布對話系統")]
         private CanvasGroup groupDialogue;
@@ -26,15 +31,12 @@ namespace KID
         private float intervalType = 0.05f;
 
         private AudioSource aud;
+        private DataNPC dataNPC;
         #endregion
-
-        public DataNPC dataNpc;
 
         private void Awake()
         {
             aud = GetComponent<AudioSource>();
-
-            StartCoroutine(StartDialogue());
         }
 
         #region 協同程序教學
@@ -51,30 +53,6 @@ namespace KID
             print("第三行文字");
         }
         #endregion
-
-        /// <summary>
-        /// 開始對話
-        /// </summary>
-        public IEnumerator StartDialogue()
-        {
-            textName.text = dataNpc.nameNPC;
-            textContent.text = "";
-
-            yield return StartCoroutine(Fade());
-
-            for (int i = 0; i < dataNpc.dataDialogue.Length; i++)
-            {
-                yield return StartCoroutine(TypeEffect(i));
-
-                // 如果 還沒按 指定按鍵 就持續等待
-                while (!Input.GetKeyDown(KeyCode.E))
-                {
-                    yield return null;
-                }
-            }
-
-            StartCoroutine(Fade(false));
-        }
 
         /// <summary>
         /// 淡入或淡出效果
@@ -98,9 +76,10 @@ namespace KID
         private IEnumerator TypeEffect(int indexDialogue)
         {
             textContent.text = "";
-            aud.PlayOneShot(dataNpc.dataDialogue[indexDialogue].sound);
+            goTriangle.SetActive(false);
+            aud.PlayOneShot(dataNPC.dataDialogue[indexDialogue].sound);
 
-            string content = dataNpc.dataDialogue[indexDialogue].content;
+            string content = dataNPC.dataDialogue[indexDialogue].content;
 
             for (int i = 0; i < content.Length; i++)
             {
@@ -110,5 +89,45 @@ namespace KID
 
             goTriangle.SetActive(true);
         }
+        #endregion
+
+        #region 公開資料與方法
+        /// <summary>
+        /// 是否在對話中
+        /// </summary>
+        public bool isDialogue;
+
+        /// <summary>
+        /// 開始對話，協同程序
+        /// </summary>
+        public IEnumerator StartDialogue(DataNPC _dataNPC, DelegateFinishDialogue callback)
+        {
+            isDialogue = true;
+
+            dataNPC = _dataNPC;
+
+            textName.text = dataNPC.nameNPC;
+            textContent.text = "";
+
+            yield return StartCoroutine(Fade());
+
+            for (int i = 0; i < dataNPC.dataDialogue.Length; i++)
+            {
+                yield return StartCoroutine(TypeEffect(i));
+
+                // 如果 還沒按 指定按鍵 就持續等待
+                while (!Input.GetKeyDown(KeyCode.E))
+                {
+                    yield return null;
+                }
+            }
+
+            StartCoroutine(Fade(false));
+
+            isDialogue = false;
+            
+            callback(); // 執行回呼函式
+        }
+        #endregion
     }
 }

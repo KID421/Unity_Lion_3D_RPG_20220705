@@ -9,16 +9,27 @@ namespace KID
     {
         [SerializeField, Header("NPC 對話資料")]
         private DataNPC dataNPC;
+        [SerializeField, Header("NPC 攝影機")]
+        private GameObject goCamera;
 
         /// <summary>
         /// 提示底圖
         /// </summary>
         private Animator aniTip;
         private string parTipFade = "觸發淡入淡出";
+        private bool isInTrigger;
+        private ThirdPersonController thirdPersonController;
+        private DialogueSystem dialogueSystem;
+        private Animator ani;
+        private string parDialogue = "開關對話";
 
         private void Awake()
         {
             aniTip = GameObject.Find("提示底圖").GetComponent<Animator>();
+            // FindObjectOfType 搜尋元件 - 僅限只有一個元件時使用
+            thirdPersonController = FindObjectOfType<ThirdPersonController>();
+            dialogueSystem = FindObjectOfType<DialogueSystem>();
+            ani = GetComponent<Animator>();
         }
 
         // 碰撞事件
@@ -26,23 +37,76 @@ namespace KID
         // 2. 有勾選 Trigger 使用 OnTrigger 事件 Enter、Exit、Stay
         private void OnTriggerEnter(Collider other)
         {
-            CheckPlayerAndAnimation(other.name);
+            CheckPlayerAndAnimation(other.name, true);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            CheckPlayerAndAnimation(other.name);
+            CheckPlayerAndAnimation(other.name, false);
+        }
+
+        private void Update()
+        {
+            InputKeyAndStartDialogue();
         }
 
         /// <summary>
         /// 檢查玩家是否進入或離開並更新動畫
         /// </summary>
         /// <param name="nameHit">碰撞物件的名稱</param>
-        private void CheckPlayerAndAnimation(string nameHit)
+        private void CheckPlayerAndAnimation(string nameHit, bool _isInTrigger)
         {
             if (nameHit == "線條先生")
             {
+                isInTrigger = _isInTrigger;
                 aniTip.SetTrigger(parTipFade);
+            }
+        }
+
+        /// <summary>
+        /// 檢查是否輸入指定按鍵 E 並開啟對話
+        /// </summary>
+        private void InputKeyAndStartDialogue()
+        {
+            if (dialogueSystem.isDialogue) return;
+
+            if (isInTrigger && Input.GetKeyDown(KeyCode.E))
+            {
+                goCamera.SetActive(true);
+                aniTip.SetTrigger(parTipFade);
+                thirdPersonController.enabled = false;
+
+                try
+                {
+                    ani.SetBool(parDialogue, true);
+                }
+                catch (System.Exception)
+                {
+                    print("<color=#993311>缺少元件錯誤，NPC 沒有 Animator</color>");
+                    // throw;
+                }
+
+                StartCoroutine(dialogueSystem.StartDialogue(dataNPC, ResetControllerAndCloseCamera));
+            }
+        }
+
+        /// <summary>
+        /// 重新設定控制器與關閉攝影機
+        /// </summary>
+        private void ResetControllerAndCloseCamera()
+        {
+            goCamera.SetActive(false);
+            thirdPersonController.enabled = true;
+            aniTip.SetTrigger(parTipFade);
+
+            try
+            {
+                ani.SetBool(parDialogue, false);
+            }
+            catch (System.Exception)
+            {
+                print("<color=#993311>缺少元件錯誤，NPC 沒有 Animator</color>");
+                // throw;
             }
         }
     }
