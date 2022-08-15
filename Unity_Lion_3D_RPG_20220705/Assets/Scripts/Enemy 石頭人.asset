@@ -10,12 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8122d13d48854e4b9fd211071622cb8, type: 3}
-  m_Name: Data Enemy
+  m_Name: "Enemy \u77F3\u982D\u4EBA"
   m_EditorClassIdentifier: 
-  hp: 1407
-  attack: 76
-  rangeTrack: 76
-  rangeAttack: 1.23
-  speedWalk: 30.7
-  propbilityProp: 0.643
+  hp: 1500
+  attack: 70
+  rangeTrack: 11
+  rangeAttack: 3.5
+  speedWalk: 3
+  probabilityProp: 0.6
   goProp: {fileID: 0}
+  timeIdleRange: {x: 1, y: 3}
+  layerTarget:
+    serializedVersion: 2
+    m_Bits: 8
+  intervalAttack: 2.5
