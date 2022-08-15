@@ -7,7 +7,7 @@ namespace KID
     /// ScriptableObject 腳本化物件
     /// 將程式內容儲存為物件放在 Project 內
     /// </summary>
-    [CreateAssetMenu(menuName = "KID/Data NPC", fileName = "Data NPC")]
+    [CreateAssetMenu(menuName = "KID/Data NPC", fileName = "Data NPC", order = 2)]
     public class DataNPC : ScriptableObject
     {
         [Header("NPC 名稱")]
