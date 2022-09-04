@@ -1,32 +1,32 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace KID
 {
     /// <summary>
-    /// ¼Ä¤H¸ê®Æ
+    /// æ•µäººè³‡æ–™
     /// </summary>
     [CreateAssetMenu(menuName = "KID/Data Enemy", fileName = "Data Enemy", order = 1)]
     public class DataEnemy : ScriptableObject
     {
-        [Header("¦å¶q"), Range(0, 2000)]
+        [Header("è¡€é‡"), Range(0, 2000)]
         public float hp;
-        [Header("§ğÀ»¤O"), Range(0, 200)]
+        [Header("æ”»æ“ŠåŠ›"), Range(0, 200)]
         public float attack;
-        [Header("°lÂÜ¶ZÂ÷"), Range(0, 200)]
+        [Header("è¿½è¹¤è·é›¢"), Range(0, 200)]
         public float rangeTrack;
-        [Header("§ğÀ»¶ZÂ÷"), Range(0, 10)]
+        [Header("æ”»æ“Šè·é›¢"), Range(0, 10)]
         public float rangeAttack;
-        [Header("¨«¸ô³t«×"), Range(0, 100)]
+        [Header("èµ°è·¯é€Ÿåº¦"), Range(0, 100)]
         public float speedWalk;
-        [Header("±¼¸¨¹D¨ã¾÷²v"), Range(0, 1)]
+        [Header("æ‰è½é“å…·æ©Ÿç‡"), Range(0, 1)]
         public float probabilityProp;
-        [Header("±¼¸¨¹D¨ã")]
+        [Header("æ‰è½é“å…·")]
         public GameObject goProp;
-        [Header("µ¥«İ®É¶¡½d³ò")]
+        [Header("ç­‰å¾…æ™‚é–“ç¯„åœ")]
         public Vector2 timeIdleRange;
-        [Header("­n°lÂÜªº¥Ø¼Ğ¹Ï¼h")]
+        [Header("è¦è¿½è¹¤çš„ç›®æ¨™åœ–å±¤")]
         public LayerMask layerTarget;
-        [Header("§ğÀ»¶¡¹j"), Range(0, 5)]
+        [Header("æ”»æ“Šé–“éš”"), Range(0, 5)]
         public float intervalAttack;
     }
 }

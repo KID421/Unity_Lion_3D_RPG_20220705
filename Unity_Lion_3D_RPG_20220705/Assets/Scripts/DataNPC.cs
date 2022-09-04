@@ -1,29 +1,29 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace KID
 {
     /// <summary>
-    /// NPC ¸ê®Æ¡G¦WºÙ¡B¹ï¸Ü¤º®e»P­µ®Ä
-    /// ScriptableObject ¸}¥»¤Æª«¥ó
-    /// ±Nµ{¦¡¤º®eÀx¦s¬°ª«¥ó©ñ¦b Project ¤º
+    /// NPC è³‡æ–™ï¼šåç¨±ã€å°è©±å…§å®¹èˆ‡éŸ³æ•ˆ
+    /// ScriptableObject è…³æœ¬åŒ–ç‰©ä»¶
+    /// å°‡ç¨‹å¼å…§å®¹å„²å­˜ç‚ºç‰©ä»¶æ”¾åœ¨ Project å…§
     /// </summary>
     [CreateAssetMenu(menuName = "KID/Data NPC", fileName = "Data NPC", order = 2)]
     public class DataNPC : ScriptableObject
     {
-        [Header("NPC ¦WºÙ")]
+        [Header("NPC åç¨±")]
         public string nameNPC;
-        // NonReorderable ¸Ñ¨M°}¦C¦bÄİ©Ê­±ªO¤WÅã¥Ü¿ù»~°İÃD
-        [Header("©Ò¦³¹ï¸Ü"), NonReorderable]
+        // NonReorderable è§£æ±ºé™£åˆ—åœ¨å±¬æ€§é¢æ¿ä¸Šé¡¯ç¤ºéŒ¯èª¤å•é¡Œ
+        [Header("æ‰€æœ‰å°è©±"), NonReorderable]
         public DataDialogue[] dataDialogue;
     }
 
-    // Ãş§O§Ç¦C¤Æ
+    // é¡åˆ¥åºåˆ—åŒ–
     [System.Serializable]
     public class DataDialogue
     {
-        [Header("¹ï¸Ü¤º®e")]
+        [Header("å°è©±å…§å®¹")]
         public string content;
-        [Header("¹ï¸Ü­µ®Ä")]
+        [Header("å°è©±éŸ³æ•ˆ")]
         public AudioClip sound;
     }
 }

@@ -1,40 +1,40 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace KID
 {
     /// <summary>
-    /// °»´úª±®a¬O§_¶i¨ì°Ï°ì¤º¡AÅã¥Ü´£¥Üµe­±¡A«öÁä°»´ú¨Ã±Ò°Ê¹ï¸Ü¨t²Î
+    /// åµæ¸¬ç©å®¶æ˜¯å¦é€²åˆ°å€åŸŸå…§ï¼Œé¡¯ç¤ºæç¤ºç•«é¢ï¼ŒæŒ‰éµåµæ¸¬ä¸¦å•Ÿå‹•å°è©±ç³»çµ±
     /// </summary>
     public class NPCSystem : MonoBehaviour
     {
-        [SerializeField, Header("NPC ¹ï¸Ü¸ê®Æ")]
+        [SerializeField, Header("NPC å°è©±è³‡æ–™")]
         private DataNPC dataNPC;
-        [SerializeField, Header("NPC Äá¼v¾÷")]
+        [SerializeField, Header("NPC æ”å½±æ©Ÿ")]
         private GameObject goCamera;
 
         /// <summary>
-        /// ´£¥Ü©³¹Ï
+        /// æç¤ºåº•åœ–
         /// </summary>
         private Animator aniTip;
-        private string parTipFade = "Ä²µo²H¤J²H¥X";
+        private string parTipFade = "è§¸ç™¼æ·¡å…¥æ·¡å‡º";
         private bool isInTrigger;
         private ThirdPersonController thirdPersonController;
         private DialogueSystem dialogueSystem;
         private Animator ani;
-        private string parDialogue = "¶}Ãö¹ï¸Ü";
+        private string parDialogue = "é–‹é—œå°è©±";
 
         private void Awake()
         {
-            aniTip = GameObject.Find("´£¥Ü©³¹Ï").GetComponent<Animator>();
-            // FindObjectOfType ·j´M¤¸¥ó - ¶È­­¥u¦³¤@­Ó¤¸¥ó®É¨Ï¥Î
+            aniTip = GameObject.Find("æç¤ºåº•åœ–").GetComponent<Animator>();
+            // FindObjectOfType æœå°‹å…ƒä»¶ - åƒ…é™åªæœ‰ä¸€å€‹å…ƒä»¶æ™‚ä½¿ç”¨
             thirdPersonController = FindObjectOfType<ThirdPersonController>();
             dialogueSystem = FindObjectOfType<DialogueSystem>();
             ani = GetComponent<Animator>();
         }
 
-        // ¸I¼²¨Æ¥ó
-        // 1. ¨â­Óª«¥ó¦Ü¤Ö¨ä¤¤¤@­Ó¦³ Rigidbody
-        // 2. ¦³¤Ä¿ï Trigger ¨Ï¥Î OnTrigger ¨Æ¥ó Enter¡BExit¡BStay
+        // ç¢°æ’äº‹ä»¶
+        // 1. å…©å€‹ç‰©ä»¶è‡³å°‘å…¶ä¸­ä¸€å€‹æœ‰ Rigidbody
+        // 2. æœ‰å‹¾é¸ Trigger ä½¿ç”¨ OnTrigger äº‹ä»¶ Enterã€Exitã€Stay
         private void OnTriggerEnter(Collider other)
         {
             CheckPlayerAndAnimation(other.name, true);
@@ -51,12 +51,12 @@ namespace KID
         }
 
         /// <summary>
-        /// ÀË¬dª±®a¬O§_¶i¤J©ÎÂ÷¶}¨Ã§ó·s°Êµe
+        /// æª¢æŸ¥ç©å®¶æ˜¯å¦é€²å…¥æˆ–é›¢é–‹ä¸¦æ›´æ–°å‹•ç•«
         /// </summary>
-        /// <param name="nameHit">¸I¼²ª«¥óªº¦WºÙ</param>
+        /// <param name="nameHit">ç¢°æ’ç‰©ä»¶çš„åç¨±</param>
         private void CheckPlayerAndAnimation(string nameHit, bool _isInTrigger)
         {
-            if (nameHit == "½u±ø¥ı¥Í")
+            if (nameHit == "ç·šæ¢å…ˆç”Ÿ")
             {
                 isInTrigger = _isInTrigger;
                 aniTip.SetTrigger(parTipFade);
@@ -64,7 +64,7 @@ namespace KID
         }
 
         /// <summary>
-        /// ÀË¬d¬O§_¿é¤J«ü©w«öÁä E ¨Ã¶}±Ò¹ï¸Ü
+        /// æª¢æŸ¥æ˜¯å¦è¼¸å…¥æŒ‡å®šæŒ‰éµ E ä¸¦é–‹å•Ÿå°è©±
         /// </summary>
         private void InputKeyAndStartDialogue()
         {
@@ -82,7 +82,7 @@ namespace KID
                 }
                 catch (System.Exception)
                 {
-                    print("<color=#993311>¯Ê¤Ö¤¸¥ó¿ù»~¡ANPC ¨S¦³ Animator</color>");
+                    print("<color=#993311>ç¼ºå°‘å…ƒä»¶éŒ¯èª¤ï¼ŒNPC æ²’æœ‰ Animator</color>");
                     // throw;
                 }
 
@@ -91,7 +91,7 @@ namespace KID
         }
 
         /// <summary>
-        /// ­«·s³]©w±±¨î¾¹»PÃö³¬Äá¼v¾÷
+        /// é‡æ–°è¨­å®šæ§åˆ¶å™¨èˆ‡é—œé–‰æ”å½±æ©Ÿ
         /// </summary>
         private void ResetControllerAndCloseCamera()
         {
@@ -105,7 +105,7 @@ namespace KID
             }
             catch (System.Exception)
             {
-                print("<color=#993311>¯Ê¤Ö¤¸¥ó¿ù»~¡ANPC ¨S¦³ Animator</color>");
+                print("<color=#993311>ç¼ºå°‘å…ƒä»¶éŒ¯èª¤ï¼ŒNPC æ²’æœ‰ Animator</color>");
                 // throw;
             }
         }

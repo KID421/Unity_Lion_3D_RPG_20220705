@@ -23,4 +23,4 @@ MonoBehaviour:
   layerTarget:
     serializedVersion: 2
     m_Bits: 8
-  intervalAttack: 2.5
+  intervalAttack: 2

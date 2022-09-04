@@ -1,36 +1,36 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace KID
 {
     /// <summary>
-    /// ²Ä¤T¤HºÙ±±¨î¾¹
-    /// ²¾°Ê»P¸õÅD°ò¥»±±¨î¡B°Êµe§ó·s
+    /// ç¬¬ä¸‰äººç¨±æ§åˆ¶å™¨
+    /// ç§»å‹•èˆ‡è·³èºåŸºæœ¬æ§åˆ¶ã€å‹•ç•«æ›´æ–°
     /// </summary>
     public class ThirdPersonController : MonoBehaviour
     {
-        #region ¸ê®Æ
-        [SerializeField, Header("²¾°Ê³t«×"), Range(0, 50)]
+        #region è³‡æ–™
+        [SerializeField, Header("ç§»å‹•é€Ÿåº¦"), Range(0, 50)]
         private float speed = 3.5f;
-        [SerializeField, Header("±ÛÂà³t«×"), Range(0, 50)]
+        [SerializeField, Header("æ—‹è½‰é€Ÿåº¦"), Range(0, 50)]
         private float turn = 5f;
-        [SerializeField, Header("¸õÅD³t«×"), Range(0, 50)]
+        [SerializeField, Header("è·³èºé€Ÿåº¦"), Range(0, 50)]
         private float jump = 7f;
 
         private Animator ani;
         private CharacterController controller;
         private Vector3 direction;
         private Transform traCamera;
-        private string parRun = "¯BÂI¼Æ¶]¨B";
-        private string parJump = "Ä²µo¸õÅD";
+        private string parRun = "æµ®é»æ•¸è·‘æ­¥";
+        private string parJump = "è§¸ç™¼è·³èº";
         #endregion
 
-        #region ¨Æ¥ó
+        #region äº‹ä»¶
         private void Awake()
         {
             ani = GetComponent<Animator>();
             controller = GetComponent<CharacterController>();
 
-            // ³z¹L¦WºÙ·j´Mª«¥ó¡A«ØÄ³©ñ¦b Awake¡BStart ©ÎªÌ°õ¦æ¤@¦¸ªº¬[ºc¤º
+            // é€éåç¨±æœå°‹ç‰©ä»¶ï¼Œå»ºè­°æ”¾åœ¨ Awakeã€Start æˆ–è€…åŸ·è¡Œä¸€æ¬¡çš„æ¶æ§‹å…§
             // traCamera = GameObject.Find("Main Camera").GetComponent<Transform>();
             traCamera = GameObject.Find("Main Camera").transform;
         }
@@ -42,38 +42,38 @@ namespace KID
         }
         #endregion
 
-        #region ¤èªk
+        #region æ–¹æ³•
         /// <summary>
-        /// ²¾°Ê
+        /// ç§»å‹•
         /// </summary>
         private void Move()
         {
-            float v = Input.GetAxisRaw("Vertical");     // ¨ú±o«e«á«öÁä­È¡GWS¡B¡ô¡õ
-            float h = Input.GetAxisRaw("Horizontal");   // ¨ú±o¥ª¥k«öÁä­È¡GAD¡B¡ö¡÷
+            float v = Input.GetAxisRaw("Vertical");     // å–å¾—å‰å¾ŒæŒ‰éµå€¼ï¼šWSã€â†‘â†“
+            float h = Input.GetAxisRaw("Horizontal");   // å–å¾—å·¦å³æŒ‰éµå€¼ï¼šADã€â†â†’
 
-            // print("<color=yellow>««ª½¶b¦V¡G" + v + "</color>");
+            // print("<color=yellow>å‚ç›´è»¸å‘ï¼š" + v + "</color>");
 
-            #region ±ÛÂà
-            // transform.rotation = traCamera.rotation; // ¨S¦³¹L´ç
+            #region æ—‹è½‰
+            // transform.rotation = traCamera.rotation; // æ²’æœ‰éæ¸¡
 
-            // ª±®a¨¤«× = ¥|¤¸¼Æ.´¡­È(ª±®a¨¤«×¡AÄá¼v¾÷¨¤«×¡A³t«× * ¨C´V®É¶¡)
+            // ç©å®¶è§’åº¦ = å››å…ƒæ•¸.æ’å€¼(ç©å®¶è§’åº¦ï¼Œæ”å½±æ©Ÿè§’åº¦ï¼Œé€Ÿåº¦ * æ¯å¹€æ™‚é–“)
             transform.rotation = Quaternion.Lerp(transform.rotation, traCamera.rotation, turn * Time.deltaTime);
 
-            // ¼Ú©Ô¨¤ euler Angles 0 - 45 - 90 - 180 - 360
-            // ©T©w X »P Z ¨¤«× ¬°¹s
+            // æ­æ‹‰è§’ euler Angles 0 - 45 - 90 - 180 - 360
+            // å›ºå®š X èˆ‡ Z è§’åº¦ ç‚ºé›¶
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
             #endregion
 
-            direction.z = v;                            // ª«¥ó«e«á¶b¬° Z ¶b¡G«ü©w¬° v «e«á«öÁä
-            direction.x = h;                            // ª«¥ó¥ª¥k¶b¬° X ¶b¡G«ü©w¬° h ¥ª¥k«öÁä
+            direction.z = v;                            // ç‰©ä»¶å‰å¾Œè»¸ç‚º Z è»¸ï¼šæŒ‡å®šç‚º v å‰å¾ŒæŒ‰éµ
+            direction.x = h;                            // ç‰©ä»¶å·¦å³è»¸ç‚º X è»¸ï¼šæŒ‡å®šç‚º h å·¦å³æŒ‰éµ
 
-            direction = transform.TransformDirection(direction);    // ±N¨¤¦âªº°Ï°ì®y¼ĞÂà¬°¥@¬É®y¼Ğ
+            direction = transform.TransformDirection(direction);    // å°‡è§’è‰²çš„å€åŸŸåº§æ¨™è½‰ç‚ºä¸–ç•Œåº§æ¨™
 
-            // ¨¤¦â±±¨î¾¹.²¾°Ê(¤è¦V * ³t«×)
-            // Time.deltaTime ¨C´Vªº®É¶¡
+            // è§’è‰²æ§åˆ¶å™¨.ç§»å‹•(æ–¹å‘ * é€Ÿåº¦)
+            // Time.deltaTime æ¯å¹€çš„æ™‚é–“
             controller.Move(direction * speed * Time.deltaTime);
 
-            // °Êµe§ó·s
+            // å‹•ç•«æ›´æ–°
             float vAxis = Input.GetAxis("Vertical");
             float hAxis = Input.GetAxis("Horizontal");
 
@@ -94,18 +94,18 @@ namespace KID
         }
 
         /// <summary>
-        /// ¸õÅD
+        /// è·³èº
         /// </summary>
         private void Jump()
         {
-            // ¦pªG ¦b¦a­±¤W ¨Ã¥B «ö¤UªÅ¥ÕÁä ´N¸õÅD
+            // å¦‚æœ åœ¨åœ°é¢ä¸Š ä¸¦ä¸” æŒ‰ä¸‹ç©ºç™½éµ å°±è·³èº
             if (controller.isGrounded && Input.GetKeyDown(KeyCode.Space))
             {
                 direction.y = jump;
                 ani.SetTrigger(parJump);
             }
 
-            // ¦a¤ß¤Ş¤O -9.81
+            // åœ°å¿ƒå¼•åŠ› -9.81
             direction.y += Physics.gravity.y * 0.8f * Time.deltaTime;
         }
         #endregion

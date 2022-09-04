@@ -1,33 +1,33 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
-using System.Collections;   // ¤Ş¥Î ¨t²Î ¶°¦X - ¸ê®Æµ²ºc»P¨ó¦Pµ{§Ç
+using System.Collections;   // å¼•ç”¨ ç³»çµ± é›†åˆ - è³‡æ–™çµæ§‹èˆ‡å”åŒç¨‹åº
 
 namespace KID
 {
-    // ©e¬£Ã±¦W µL¶Ç¦^»PµL°Ñ¼Æ
+    // å§”æ´¾ç°½å ç„¡å‚³å›èˆ‡ç„¡åƒæ•¸
     public delegate void DelegateFinishDialogue();
 
     /// <summary>
-    /// ¹ï¸Ü¨t²Î¡A²H¤J¹ï¸Ü®Ø¡A§ó·s NPC ¸ê®Æ¦WºÙ¡B¤º®e¡B­µ®Ä¡A²H¥X
+    /// å°è©±ç³»çµ±ï¼Œæ·¡å…¥å°è©±æ¡†ï¼Œæ›´æ–° NPC è³‡æ–™åç¨±ã€å…§å®¹ã€éŸ³æ•ˆï¼Œæ·¡å‡º
     /// </summary>
-    /// RequireComponent ­n¨D¤¸¥ó¡A¦b²K¥[¸}¥»®ÉÄ²µo
+    /// RequireComponent è¦æ±‚å…ƒä»¶ï¼Œåœ¨æ·»åŠ è…³æœ¬æ™‚è§¸ç™¼
     [RequireComponent(typeof(AudioSource))]
     public class DialogueSystem : MonoBehaviour
     {
-        #region «Ê¸Ë¤º®e
+        #region å°è£å…§å®¹
 
-        #region ¸ê®Æ
-        [SerializeField, Header("µe¥¬¹ï¸Ü¨t²Î")]
+        #region è³‡æ–™
+        [SerializeField, Header("ç•«å¸ƒå°è©±ç³»çµ±")]
         private CanvasGroup groupDialogue;
-        [SerializeField, Header("»¡¸ÜªÌ¦WºÙ")]
+        [SerializeField, Header("èªªè©±è€…åç¨±")]
         private TextMeshProUGUI textName;
-        [SerializeField, Header("¹ï¸Ü¤º®e")]
+        [SerializeField, Header("å°è©±å…§å®¹")]
         private TextMeshProUGUI textContent;
-        [SerializeField, Header("¤T¨¤§Î")]
+        [SerializeField, Header("ä¸‰è§’å½¢")]
         private GameObject goTriangle;
-        [SerializeField, Header("²H¤J¶¡¹j"), Range(0, 0.5f)]
+        [SerializeField, Header("æ·¡å…¥é–“éš”"), Range(0, 0.5f)]
         private float intervalFadeIn = 0.1f;
-        [SerializeField, Header("¥´¦r¶¡¹j"), Range(0, 0.2f)]
+        [SerializeField, Header("æ‰“å­—é–“éš”"), Range(0, 0.2f)]
         private float intervalType = 0.05f;
 
         private AudioSource aud;
@@ -39,28 +39,28 @@ namespace KID
             aud = GetComponent<AudioSource>();
         }
 
-        #region ¨ó¦Pµ{§Ç±Ğ¾Ç
-        // ¨ó¦Pµ{§Ç»İ­nªº
-        // 1. ¤Ş¥Î System.Collections
-        // 2. ©w¸q¤èªk ¨Ã¶Ç¦^ IEunumerator
-        // 3. ±Ò°Ê¨óµ{ StartCoroutine
+        #region å”åŒç¨‹åºæ•™å­¸
+        // å”åŒç¨‹åºéœ€è¦çš„
+        // 1. å¼•ç”¨ System.Collections
+        // 2. å®šç¾©æ–¹æ³• ä¸¦å‚³å› IEunumerator
+        // 3. å•Ÿå‹•å”ç¨‹ StartCoroutine
         private IEnumerator Test()
         {
-            print("²Ä¤@¦æ¤å¦r");
+            print("ç¬¬ä¸€è¡Œæ–‡å­—");
             yield return new WaitForSeconds(2);
-            print("²Ä¤G¦æ¤å¦r");
+            print("ç¬¬äºŒè¡Œæ–‡å­—");
             yield return new WaitForSeconds(5);
-            print("²Ä¤T¦æ¤å¦r");
+            print("ç¬¬ä¸‰è¡Œæ–‡å­—");
         }
         #endregion
 
         /// <summary>
-        /// ²H¤J©Î²H¥X®ÄªG
+        /// æ·¡å…¥æˆ–æ·¡å‡ºæ•ˆæœ
         /// </summary>
         private IEnumerator Fade(bool fadeIn = true)
         {
-            // ¤T¤¸¹Bºâ¤l
-            // ¥¬ªL­È ? ¥¬ªL­È¬° true : ¥¬ªL­È¬° false
+            // ä¸‰å…ƒé‹ç®—å­
+            // å¸ƒæ—å€¼ ? å¸ƒæ—å€¼ç‚º true : å¸ƒæ—å€¼ç‚º false
             float increase = fadeIn ? 0.1f : -0.1f;
 
             for (int i = 0; i < 10; i++)
@@ -71,7 +71,7 @@ namespace KID
         }
 
         /// <summary>
-        /// ¥´¦r®ÄªG¡B¼½©ñ¹ï¸Ü­µ®Ä»PÅã¥Ü¤T¨¤§Î
+        /// æ‰“å­—æ•ˆæœã€æ’­æ”¾å°è©±éŸ³æ•ˆèˆ‡é¡¯ç¤ºä¸‰è§’å½¢
         /// </summary>
         private IEnumerator TypeEffect(int indexDialogue)
         {
@@ -91,14 +91,14 @@ namespace KID
         }
         #endregion
 
-        #region ¤½¶}¸ê®Æ»P¤èªk
+        #region å…¬é–‹è³‡æ–™èˆ‡æ–¹æ³•
         /// <summary>
-        /// ¬O§_¦b¹ï¸Ü¤¤
+        /// æ˜¯å¦åœ¨å°è©±ä¸­
         /// </summary>
         public bool isDialogue;
 
         /// <summary>
-        /// ¶}©l¹ï¸Ü¡A¨ó¦Pµ{§Ç
+        /// é–‹å§‹å°è©±ï¼Œå”åŒç¨‹åº
         /// </summary>
         public IEnumerator StartDialogue(DataNPC _dataNPC, DelegateFinishDialogue callback)
         {
@@ -115,7 +115,7 @@ namespace KID
             {
                 yield return StartCoroutine(TypeEffect(i));
 
-                // ¦pªG ÁÙ¨S«ö «ü©w«öÁä ´N«ùÄòµ¥«İ
+                // å¦‚æœ é‚„æ²’æŒ‰ æŒ‡å®šæŒ‰éµ å°±æŒçºŒç­‰å¾…
                 while (!Input.GetKeyDown(KeyCode.E))
                 {
                     yield return null;
@@ -126,7 +126,7 @@ namespace KID
 
             isDialogue = false;
             
-            callback(); // °õ¦æ¦^©I¨ç¦¡
+            callback(); // åŸ·è¡Œå›å‘¼å‡½å¼
         }
         #endregion
     }

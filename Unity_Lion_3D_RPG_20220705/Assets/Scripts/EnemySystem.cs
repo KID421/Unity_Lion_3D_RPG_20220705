@@ -1,15 +1,15 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.AI;
 
 namespace KID
 {
     /// <summary>
-    /// ¼Ä¤H¨t²Î¡G¹C¨«¡B°lÂÜ¡B§ğÀ»
+    /// æ•µäººç³»çµ±ï¼šéŠèµ°ã€è¿½è¹¤ã€æ”»æ“Š
     /// </summary>
     public class EnemySystem : MonoBehaviour
     {
-        #region ¸ê®Æ
-        [SerializeField, Header("¼Ä¤H¸ê®Æ")]
+        #region è³‡æ–™
+        [SerializeField, Header("æ•µäººè³‡æ–™")]
         private DataEnemy dataEnemy;
         [SerializeField]
         private StateEnemy stateEnemy;
@@ -17,13 +17,13 @@ namespace KID
         private Animator ani;
         private NavMeshAgent nma;
         private Vector3 v3TargetPosition;
-        private string parWalk = "¶}Ãö¨«¸ô";
-        private string parAttack = "Ä²µo§ğÀ»";
+        private string parWalk = "é–‹é—œèµ°è·¯";
+        private string parAttack = "è§¸ç™¼æ”»æ“Š";
         private float timerIdle;
         private float timerAttack;
         #endregion
 
-        #region ¨Æ¥ó
+        #region äº‹ä»¶
         private void Awake()
         {
             ani = GetComponent<Animator>();
@@ -50,9 +50,9 @@ namespace KID
         }
         #endregion
 
-        #region ¤èªk
+        #region æ–¹æ³•
         /// <summary>
-        /// ª¬ºAÂà´«¾¹
+        /// ç‹€æ…‹è½‰æ›å™¨
         /// </summary>
         private void StateSwitcher()
         {
@@ -74,14 +74,14 @@ namespace KID
         }
 
         /// <summary>
-        /// ¹C¨«
+        /// éŠèµ°
         /// </summary>
         private void Wander()
         {
-            // ¦pªG ³Ñ¾lªº¶ZÂ÷ µ¥©ó ¹s
+            // å¦‚æœ å‰©é¤˜çš„è·é›¢ ç­‰æ–¼ é›¶
             if (nma.remainingDistance == 0)
             {
-                // ÀH¾÷®y¼Ğ = ÀH¾÷¶ê¤ºªºÂI * °lÂÜ½d³ò
+                // éš¨æ©Ÿåº§æ¨™ = éš¨æ©Ÿåœ“å…§çš„é» * è¿½è¹¤ç¯„åœ
                 v3TargetPosition = transform.position + Random.insideUnitSphere * dataEnemy.rangeTrack;
                 v3TargetPosition.y = transform.position.y;
             }
@@ -91,14 +91,14 @@ namespace KID
         }
 
         /// <summary>
-        /// µ¥«İ
+        /// ç­‰å¾…
         /// </summary>
         private void Idle()
         {
             nma.velocity = Vector3.zero;
             ani.SetBool(parWalk, false);
             timerIdle += Time.deltaTime;
-            
+
             float r = Random.Range(dataEnemy.timeIdleRange.x, dataEnemy.timeIdleRange.y);
 
             if (timerIdle >= r)
@@ -109,10 +109,15 @@ namespace KID
         }
 
         /// <summary>
-        /// °lÂÜ
+        /// è¿½è¹¤
         /// </summary>
         private void Track()
         {
+            if (ani.GetCurrentAnimatorStateInfo(0).IsName("æ”»æ“Š"))
+            {
+                nma.velocity = Vector3.zero;
+            }
+
             nma.SetDestination(v3TargetPosition);
             ani.SetBool(parWalk, true);
 
@@ -120,15 +125,33 @@ namespace KID
             {
                 stateEnemy = StateEnemy.Attack;
             }
+            else
+            {
+                stateEnemy = StateEnemy.Track;
+                timerAttack = dataEnemy.intervalAttack;
+            }
         }
 
         /// <summary>
-        /// §ğÀ»
+        /// æ”»æ“Š
         /// </summary>
         private void Attack()
         {
             ani.SetBool(parWalk, false);
             nma.velocity = Vector3.zero;
+
+            if (ani.GetCurrentAnimatorStateInfo(0).IsName("æ”»æ“Š")) return;
+
+            Collider[] hits = Physics.OverlapSphere(transform.position, dataEnemy.rangeTrack, dataEnemy.layerTarget);
+            if (hits.Length > 0)
+            {
+                v3TargetPosition = hits[0].transform.position;
+
+                if (Vector3.Distance(transform.position, v3TargetPosition) > dataEnemy.rangeAttack)
+                {
+                    stateEnemy = StateEnemy.Track;
+                }
+            }
 
             if (timerAttack < dataEnemy.intervalAttack)
             {
@@ -142,18 +165,24 @@ namespace KID
         }
 
         /// <summary>
-        /// ÀË¬d¥Ø¼Ğ¬O§_¦b°lÂÜ½d³ò¤º
+        /// æª¢æŸ¥ç›®æ¨™æ˜¯å¦åœ¨è¿½è¹¤ç¯„åœå…§
         /// </summary>
         private void CheckerTargetInTrackRange()
         {
-            if (stateEnemy == StateEnemy.Attack) return;
 
             Collider[] hits = Physics.OverlapSphere(transform.position, dataEnemy.rangeTrack, dataEnemy.layerTarget);
 
             if (hits.Length > 0)
             {
                 v3TargetPosition = hits[0].transform.position;
+
+                if (stateEnemy == StateEnemy.Attack) return;
+
                 stateEnemy = StateEnemy.Track;
+            }
+            else
+            {
+                stateEnemy = StateEnemy.Wander;
             }
         }
         #endregion
