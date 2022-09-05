@@ -21,17 +21,19 @@ namespace KID
         private string parAttack = "Ä²µo§ðÀ»";
         private float timerIdle;
         private float timerAttack;
+        private EnemyAttack enemyAttack;
         #endregion
 
         #region ¨Æ¥ó
         private void Awake()
         {
             ani = GetComponent<Animator>();
+            enemyAttack = GetComponent<EnemyAttack>();
             nma = GetComponent<NavMeshAgent>();
             nma.speed = dataEnemy.speedWalk;
         }
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             Gizmos.color = new Color(0, 1, 0.2f, 0.3f);
             Gizmos.DrawSphere(transform.position, dataEnemy.rangeTrack);
@@ -113,12 +115,22 @@ namespace KID
         /// </summary>
         private void Track()
         {
+            if (ani.GetCurrentAnimatorStateInfo(0).IsName("§ðÀ»"))
+            {
+                nma.velocity = Vector3.zero;
+            }
+
             nma.SetDestination(v3TargetPosition);
             ani.SetBool(parWalk, true);
+            ani.ResetTrigger(parAttack);
 
             if (Vector3.Distance(transform.position, v3TargetPosition) <= dataEnemy.rangeAttack)
             {
                 stateEnemy = StateEnemy.Attack;
+            }
+            else
+            {
+                timerAttack = dataEnemy.intervalAttack;
             }
         }
 
@@ -138,6 +150,8 @@ namespace KID
             {
                 ani.SetTrigger(parAttack);
                 timerAttack = 0;
+                enemyAttack.StartAttack();
+                stateEnemy = StateEnemy.Track;
             }
         }
 
@@ -146,17 +160,21 @@ namespace KID
         /// </summary>
         private void CheckerTargetInTrackRange()
         {
-            if (stateEnemy == StateEnemy.Attack) return;
-
             Collider[] hits = Physics.OverlapSphere(transform.position, dataEnemy.rangeTrack, dataEnemy.layerTarget);
 
             if (hits.Length > 0)
             {
                 v3TargetPosition = hits[0].transform.position;
+    
+                if (stateEnemy == StateEnemy.Attack) return;
+
                 stateEnemy = StateEnemy.Track;
+            }
+            else
+            {
+                stateEnemy = StateEnemy.Wander;
             }
         }
         #endregion
     }
 }
-
