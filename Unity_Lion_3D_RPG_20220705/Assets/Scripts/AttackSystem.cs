@@ -11,7 +11,7 @@ namespace KID
         [SerializeField, Header("攻擊資料")]
         private DataAttack dataAttack;
 
-        private bool canAttack = true;
+        protected bool canAttack = true;
 
         private void OnDrawGizmos()
         {
@@ -48,6 +48,15 @@ namespace KID
 
             yield return new WaitForSeconds(dataAttack.waitAttackEnd);
             canAttack = true;
+            StopAttack();
+        }
+
+        /// <summary>
+        /// 停止攻擊：保護、虛擬 - 允許子類別複寫
+        /// </summary>
+        protected virtual void StopAttack()
+        {
+
         }
 
         /// <summary>

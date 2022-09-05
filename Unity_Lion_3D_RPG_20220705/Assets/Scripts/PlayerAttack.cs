@@ -8,11 +8,14 @@ namespace KID
     public class PlayerAttack : AttackSystem
     {
         private Animator ani;
+        private ThirdPersonController tpc;
+
         private string parAttack = "Ä²µo§ðÀ»";
 
         private void Awake()
         {
             ani = GetComponent<Animator>();
+            tpc = GetComponent<ThirdPersonController>();
         }
 
         private void Update()
@@ -25,11 +28,19 @@ namespace KID
         /// </summary>
         private void AttackInput()
         {
+            if (!canAttack) return;
+
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                tpc.enabled = false;
                 ani.SetTrigger(parAttack);
                 StartAttack();
             }
+        }
+
+        protected override void StopAttack()
+        {
+            tpc.enabled = true;
         }
     }
 }

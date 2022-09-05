@@ -18,6 +18,6 @@ MonoBehaviour:
   attackAreaOffset: {x: 0.5, y: 1, z: 1.5}
   layerTarget:
     serializedVersion: 2
-    m_Bits: 0
-  delayAttack: 1.5
+    m_Bits: 64
+  delayAttack: 0.8
   animationAttack: {fileID: -203655887218126122, guid: 0e48af452797bed489f5de46e25cfc7b, type: 3}
