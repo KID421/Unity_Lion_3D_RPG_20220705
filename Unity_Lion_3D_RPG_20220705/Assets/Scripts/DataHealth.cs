@@ -1,5 +1,5 @@
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;      // 引用編輯器命名空間
 
 namespace KID
 {
@@ -15,38 +15,39 @@ namespace KID
         public float hpMax => hp;
         [Header("是否掉落寶物")]
         public bool isDropProp;
-        [HideInInspector]
-        [Header("寶物預製物")]
+        [HideInInspector, Header("寶物預製物")]
         public GameObject goProp;
-        [HideInInspector]
-        [Header("寶物掉落機率"), Range(0f, 1f)]
+        [HideInInspector, Header("寶物掉落機率"), Range(0f, 1f)]
         public float propProbability;
     }
 
-    [CustomEditor(typeof (DataHealth))]
-    public class EditorMain : Editor
+    // 自訂編輯器(類型(要自訂編輯器的類別))
+    [CustomEditor(typeof(DataHealth))]
+    public class DataHealthEditor : Editor
     {
-        SerializedProperty isDropProp;
-        SerializedProperty goProp;
-        SerializedProperty propProbability;
+        // 序列化屬性 自訂名稱
+        SerializedProperty spIsDropProp;
+        SerializedProperty spGoProp;
+        SerializedProperty spPropProbability;
 
+        // 啟動事件：該物件或元件顯示時執行一次
         private void OnEnable()
         {
-            isDropProp = serializedObject.FindProperty(nameof(DataHealth.isDropProp));
-            goProp = serializedObject.FindProperty(nameof(DataHealth.goProp));
-            propProbability = serializedObject.FindProperty(nameof(DataHealth.propProbability));
+            // 序列化物件.尋找屬性(名稱(類別.資料名稱))
+            spIsDropProp = serializedObject.FindProperty(nameof(DataHealth.isDropProp));
+            spGoProp = serializedObject.FindProperty(nameof(DataHealth.goProp));
+            spPropProbability = serializedObject.FindProperty(nameof(DataHealth.propProbability));
         }
 
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
-
             serializedObject.Update();
 
-            if (isDropProp.boolValue)
+            if (spIsDropProp.boolValue)
             {
-                EditorGUILayout.PropertyField(goProp);
-                EditorGUILayout.PropertyField(propProbability);
+                EditorGUILayout.PropertyField(spGoProp);
+                EditorGUILayout.PropertyField(spPropProbability);
             }
 
             serializedObject.ApplyModifiedProperties();

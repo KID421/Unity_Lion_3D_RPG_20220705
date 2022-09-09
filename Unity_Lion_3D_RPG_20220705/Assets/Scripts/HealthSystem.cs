@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace KID
 {
@@ -8,16 +9,20 @@ namespace KID
     public class HealthSystem : MonoBehaviour
     {
         [SerializeField, Header("血量資料")]
-        private DataHealth dataHealth;
+        protected DataHealth dataHealth;
+        [SerializeField, Header("血條")]
+        private Image imgHealth;
 
         private float hp;
         private Animator ani;
         private string parHurt = "觸發受傷";
         private string parDead = "開關死亡";
+        private AttackSystem attackSystem;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             ani = GetComponent<Animator>();
+            attackSystem = GetComponent<AttackSystem>();
             hp = dataHealth.hp;
         }
 
@@ -31,15 +36,18 @@ namespace KID
             ani.SetTrigger(parHurt);
 
             if (hp <= 0) Dead();
+
+            imgHealth.fillAmount = hp / dataHealth.hpMax;
         }
 
         /// <summary>
         /// 死亡
         /// </summary>
-        private void Dead()
+        protected virtual void Dead()
         {
             hp = 0;
             ani.SetBool(parDead, true);
+            attackSystem.enabled = false;
         }
     }
 }

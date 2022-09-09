@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e1bad0ed06007419051ce37c5bfe5c, type: 3}
   m_Name: "Health \u77F3\u982D\u4EBA"
   m_EditorClassIdentifier: 
-  hp: 2500
+  hp: 5
   isDropProp: 1
-  goProp: {fileID: 0}
+  goProp: {fileID: 540698784478928281, guid: 0bb727be62dd2ef4785ca5941bad966b, type: 3}
   propProbability: 0.7

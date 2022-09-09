@@ -10,8 +10,16 @@ namespace KID
     {
         [SerializeField, Header("攻擊資料")]
         private DataAttack dataAttack;
+        [SerializeField, Header("攻擊動畫名稱")]
+        private string nameAnimation;
 
         protected bool canAttack = true;
+        protected Animator ani;
+
+        protected virtual void Awake()
+        {
+            ani = GetComponent<Animator>();
+        }
 
         private void OnDrawGizmos()
         {
@@ -64,6 +72,8 @@ namespace KID
         /// </summary>
         private void CheckAttackArea()
         {
+            if (!ani.GetCurrentAnimatorStateInfo(0).IsName(nameAnimation)) return;
+
             Collider[] hits = Physics.OverlapBox(
                 transform.position +
                 transform.TransformDirection(dataAttack.attackAreaOffset),
@@ -72,7 +82,7 @@ namespace KID
 
             if (hits.Length > 0)
             {
-                print(hits[0].name);
+                hits[0].GetComponent<HealthSystem>().Hurt(dataAttack.attack);
             }
         }
     }

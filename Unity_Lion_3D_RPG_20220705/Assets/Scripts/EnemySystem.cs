@@ -50,6 +50,13 @@ namespace KID
             StateSwitcher();
             CheckerTargetInTrackRange();
         }
+
+        // 關閉事件：此類別被關閉時執行一次
+        private void OnDisable()
+        {
+            // nma.Stop();          // 綠色蚯蚓：已經過時 API 建議使用替代方案
+            nma.isStopped = true;
+        }
         #endregion
 
         #region 方法
