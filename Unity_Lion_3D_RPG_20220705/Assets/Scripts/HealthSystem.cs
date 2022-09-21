@@ -40,6 +40,8 @@ namespace KID
             imgHealth.fillAmount = hp / dataHealth.hpMax;
         }
 
+        private bool isDead;
+
         /// <summary>
         /// ¦º¤`
         /// </summary>

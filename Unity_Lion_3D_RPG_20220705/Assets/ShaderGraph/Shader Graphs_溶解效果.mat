@@ -47,11 +47,27 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _SampleTexture2D_0380351874f642af8252ac8f15d4bf47_Texture_1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_5bb9b959c8c74d2f8bb93481fd6fb4c6_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - __2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - __3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - __8:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -69,7 +85,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - DissolveValue: 0.1
+    - DissolveValue: 0.01
     - _: 0
     - _AddPrecomputedVelocity: 0
     - _AlphaCutoffEnable: 0
@@ -130,4 +146,5 @@ Material:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - __5: {r: -3, g: 1.5, b: 0, a: 0}
     - __7: {r: 1048576, g: 481111.34, b: 28784.44, a: 1}
+    - __9: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
