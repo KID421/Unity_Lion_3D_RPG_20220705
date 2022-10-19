@@ -1,5 +1,8 @@
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;      // 引用編輯器命名空間
+#endif
 
 namespace KID
 {
@@ -21,6 +24,7 @@ namespace KID
         public float propProbability;
     }
 
+#if UNITY_EDITOR
     // 自訂編輯器(類型(要自訂編輯器的類別))
     [CustomEditor(typeof(DataHealth))]
     public class DataHealthEditor : Editor
@@ -53,4 +57,5 @@ namespace KID
             serializedObject.ApplyModifiedProperties();
         }
     }
+#endif
 }

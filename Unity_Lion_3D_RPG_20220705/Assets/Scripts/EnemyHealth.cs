@@ -16,6 +16,12 @@ namespace KID
 
         private ObjectPoolRock objectPoolRock;
 
+        public delegate void delegateDead();
+        /// <summary>
+        /// 死亡事件
+        /// </summary>
+        public delegateDead onDead;
+
         protected override void Awake()
         {
             base.Awake();
@@ -26,7 +32,24 @@ namespace KID
             // GetComponentsInChildren 取得子物件們的原件，傳回陣列
             matDissolve = GetComponentsInChildren<Renderer>()[0].material;
 
-            objectPoolRock = FindObjectOfType<ObjectPoolRock>();
+            // objectPoolRock = FindObjectOfType<ObjectPoolRock>();
+            objectPoolRock = GameObject.Find("物件池碎片").GetComponent<ObjectPoolRock>();
+        }
+
+        // 遊戲物件被隱藏時執行一次
+        private void OnDisable()
+        {
+            
+        }
+
+        // 遊戲物件被顯示時執行一次
+        private void OnEnable()
+        {
+            hp = dataHealth.hp;
+            imgHealth.fillAmount = 1;
+            enemySystem.enabled = true;
+            matDissolve.SetFloat(nameDissolve, 2.5f);
+            maxDissolve = 2.5f;
         }
 
         protected override void Dead()
@@ -48,6 +71,8 @@ namespace KID
                 matDissolve.SetFloat(nameDissolve, maxDissolve);
                 yield return new WaitForSeconds(0.03f);
             }
+
+            onDead();
         }
 
         /// <summary>
